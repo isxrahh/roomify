@@ -2,6 +2,8 @@ import type {Route} from "./+types/home";
 import Navbar from "../../components/Navbar";
 import {ArrowRight, ArrowUpRight, Clock, Layers} from "lucide-react";
 import Button from "../../components/ui/Button";
+import Upload from "../../components/Upload";
+import {useNavigate} from "react-router";
 
 export function meta({}: Route.MetaArgs) {
     return [
@@ -11,6 +13,13 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
+    const navigate = useNavigate();
+    const handleUploadComplete = async (base64Image: string) => {
+        const newId = Date.now().toString();
+        navigate(`/visualizer/${newId}`)
+        return true;
+    }
+
     return (
         <div className="home">
             <Navbar/>
@@ -42,7 +51,7 @@ export default function Home() {
                             <h3>Upload your floor plan</h3>
                             <p>Supports JPG, PNG, formats upto 10MB</p>
                         </div>
-                        <p>Upload images</p>
+                        <Upload onComplete={handleUploadComplete}/>
                     </div>
                 </div>
             </section>
@@ -57,7 +66,9 @@ export default function Home() {
                     <div className="projects-grid">
                         <div className="project-card group">
                             <div className="preview">
-                                <img src="" alt="Project"/>
+                                <img
+                                    src="https://images.timesproperty.com/webstories_manage/1675261957_38253FD3-F2CA-4090-93E9-D56964AF3289.jpeg"
+                                    alt="Project"/>
                                 <div className="badge">
                                     <span>Community</span>
                                 </div>
